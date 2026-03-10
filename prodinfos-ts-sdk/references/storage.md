@@ -22,7 +22,6 @@ import { init } from '@prodinfos/sdk-ts';
 const analytics = init({
   apiKey,
   projectId,
-  endpoint,
   debug: false,
 });
 ```
@@ -36,7 +35,6 @@ import { initAsync } from '@prodinfos/sdk-ts';
 const analytics = await initAsync({
   apiKey,
   projectId,
-  endpoint,
   debug: typeof __DEV__ === 'boolean' ? __DEV__ : false,
   platform: 'react-native',
   storage: {
@@ -58,7 +56,6 @@ const kv = new MMKV();
 const analytics = init({
   apiKey,
   projectId,
-  endpoint,
   debug: typeof __DEV__ === 'boolean' ? __DEV__ : false,
   storage: {
     getItem: (key) => kv.getString(key) ?? null,

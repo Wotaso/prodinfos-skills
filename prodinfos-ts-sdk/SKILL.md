@@ -29,6 +29,7 @@ See [Versioning Notes](references/versioning.md).
 - Initialize exactly once near app bootstrap.
 - `runtimeEnv` is auto-attached. Do not pass a `mode` string.
 - `debug` is only a boolean for SDK console logging.
+- Collector endpoint is SDK-internal by default; do not require host apps to configure it.
 - Prefer SDK constants and tracker helpers over ad-hoc event names.
 - Keep event properties stable and query-relevant.
 - Avoid direct PII.
@@ -43,7 +44,6 @@ import { init } from '@prodinfos/sdk-ts';
 const analytics = init({
   apiKey: process.env.PRODINFOS_WRITE_KEY!,
   projectId: process.env.PRODINFOS_PROJECT_ID!,
-  endpoint: 'https://collector.prodinfos.com',
   debug: false,
   platform: 'web',
   appVersion: '1.0.0',
@@ -60,7 +60,6 @@ import { initAsync } from '@prodinfos/sdk-ts';
 const analytics = await initAsync({
   apiKey: process.env.PRODINFOS_WRITE_KEY!,
   projectId: process.env.PRODINFOS_PROJECT_ID!,
-  endpoint: 'https://collector.prodinfos.com',
   debug: typeof __DEV__ === 'boolean' ? __DEV__ : false,
   platform: 'react-native',
   appVersion: '1.0.0',
