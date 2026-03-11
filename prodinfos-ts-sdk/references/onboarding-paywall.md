@@ -19,6 +19,20 @@ Available constants:
 - `PURCHASE_EVENTS`
 - `ONBOARDING_SURVEY_EVENTS`
 
+## Host App Shape
+
+Use a thin host integration:
+
+- one SDK bootstrap (`initFromEnv(...)`)
+- direct tracker/event calls in feature code
+- minimal shared helpers only when multiple call sites truly reuse the same payload shape
+
+Avoid:
+
+- giant event translation files
+- keeping legacy event names forever
+- generic `trackEvent(...)` proxies that hide canonical SDK APIs
+
 ## Required Onboarding Events
 
 | Event | When to send | Required properties |

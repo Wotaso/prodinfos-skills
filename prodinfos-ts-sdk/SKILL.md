@@ -3,7 +3,7 @@ name: prodinfos-ts-sdk
 description: Use when integrating or upgrading the Prodinfos TypeScript SDK in web, TypeScript, React Native, or Expo apps.
 license: MIT
 homepage: https://github.com/wotaso/prodinfos-skills
-metadata: {"author":"wotaso","version":"1.2.0","prodinfos-target":"@prodinfos/sdk-ts","prodinfos-supported-range":">=0.1.0-preview.0 <0.2.0","openclaw":{"emoji":"🧩","homepage":"https://github.com/wotaso/prodinfos-skills"}}
+metadata: {"author":"wotaso","version":"1.3.0","prodinfos-target":"@prodinfos/sdk-ts","prodinfos-supported-range":">=0.1.0-preview.0 <0.2.0","openclaw":{"emoji":"🧩","homepage":"https://github.com/wotaso/prodinfos-skills"}}
 ---
 
 # Prodinfos TypeScript SDK
@@ -17,7 +17,7 @@ metadata: {"author":"wotaso","version":"1.2.0","prodinfos-target":"@prodinfos/sd
 
 ## Supported Versions
 
-- Skill pack: `1.2.0`
+- Skill pack: `1.3.0`
 - Target package: `@prodinfos/sdk-ts`
 - Supported range: `>=0.1.0-preview.0 <0.2.0`
 - If a future SDK major changes APIs or event contracts in incompatible ways, add a sibling skill such as `prodinfos-ts-sdk-v1`
@@ -41,6 +41,19 @@ See [Versioning Notes](references/versioning.md).
 - Prefer SDK identity helpers (`setUser`, `identify`, `clearUser`) directly instead of wrapping identify logic in host-app boilerplate.
 - If a legacy analytics provider already exists, migrate it to Prodinfos as the primary provider instead of running permanent dual tracking.
 - For generated docs or README snippets, write from tenant developer perspective (`your app`, `your workspace`) and avoid provider-centric phrasing such as `our SaaS`.
+- Default to canonical SDK event names at call sites. Do not keep legacy event names unless the user explicitly requires a compatibility phase.
+
+## Host App Minimalism Guardrails
+
+When this skill writes host-app code, optimize for low boilerplate by default.
+
+- Do not generate a large compatibility layer such as `mapLegacyEventToCanonical(...)` with many `switch` branches.
+- Do not create host-side wrappers around `identify`/`setUser` unless required by an existing app contract.
+- Do not add per-call `try/catch` wrappers around every analytics helper unless the user asked for that policy.
+- Do not duplicate SDK constants/events in host utility files.
+- Prefer direct SDK calls in feature code (`trackPaywallEvent`, tracker helpers, `screen`, `track`) instead of generic proxy helpers.
+- If a thin `analytics.ts` is needed, keep it focused to bootstrap + a few shared helpers. Avoid becoming an event-translation layer.
+- If compatibility is unavoidable, keep the shim temporary, clearly marked, and small.
 
 ## Minimal Web Setup
 
@@ -108,9 +121,10 @@ The integration should cover more than SDK bootstrap:
 When existing analytics code is present (for example Aptabase, Firebase Analytics, Segment):
 
 1. Replace the old provider as the default event sink with Prodinfos.
-2. Keep existing app-level tracking function signatures (`trackEvent`, `trackScreenView`, etc.) to minimize call-site churn.
-3. Preserve legacy event names short-term only if dashboards depend on them, then normalize to canonical names.
-4. Use temporary dual-write only during a defined migration window and remove it after validation.
+2. Prefer migrating call sites to canonical Prodinfos event names directly.
+3. Only keep existing app-level tracking signatures if the user explicitly asks for compatibility.
+4. If legacy names must be preserved short-term, isolate the shim and schedule immediate cleanup.
+5. Use temporary dual-write only during a defined migration window and remove it after validation.
 
 ## Validation Loop
 
