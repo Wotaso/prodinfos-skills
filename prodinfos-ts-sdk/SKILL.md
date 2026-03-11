@@ -3,7 +3,7 @@ name: prodinfos-ts-sdk
 description: Use when integrating or upgrading the Prodinfos TypeScript SDK in web, TypeScript, React Native, or Expo apps.
 license: MIT
 homepage: https://github.com/wotaso/prodinfos-skills
-metadata: {"author":"wotaso","version":"1.1.0","prodinfos-target":"@prodinfos/sdk-ts","prodinfos-supported-range":">=0.1.0-preview.0 <0.2.0","openclaw":{"emoji":"🧩","homepage":"https://github.com/wotaso/prodinfos-skills"}}
+metadata: {"author":"wotaso","version":"1.2.0","prodinfos-target":"@prodinfos/sdk-ts","prodinfos-supported-range":">=0.1.0-preview.0 <0.2.0","openclaw":{"emoji":"🧩","homepage":"https://github.com/wotaso/prodinfos-skills"}}
 ---
 
 # Prodinfos TypeScript SDK
@@ -17,7 +17,7 @@ metadata: {"author":"wotaso","version":"1.1.0","prodinfos-target":"@prodinfos/sd
 
 ## Supported Versions
 
-- Skill pack: `1.1.0`
+- Skill pack: `1.2.0`
 - Target package: `@prodinfos/sdk-ts`
 - Supported range: `>=0.1.0-preview.0 <0.2.0`
 - If a future SDK major changes APIs or event contracts in incompatible ways, add a sibling skill such as `prodinfos-ts-sdk-v1`
@@ -27,6 +27,7 @@ See [Versioning Notes](references/versioning.md).
 ## Core Rules
 
 - Initialize exactly once near app bootstrap.
+- Prefer `initFromEnv(...)` as default bootstrap path to minimize host app boilerplate.
 - `runtimeEnv` is auto-attached. Do not pass a `mode` string.
 - `debug` is only a boolean for SDK console logging.
 - Do not pass `endpoint` and do not add endpoint env vars in app templates. Use the SDK default collector endpoint.
@@ -34,7 +35,7 @@ See [Versioning Notes](references/versioning.md).
 - Keep event properties stable and query-relevant.
 - Avoid direct PII.
 - Use storage when you need stable `anonId` and `sessionId` across restarts.
-- Prefer `init(...)` in host apps, even with async storage adapters. Avoid top-level `Promise` singletons in app utility files.
+- Prefer `initFromEnv(...)` in host apps, even with async storage adapters. Avoid top-level `Promise` singletons in app utility files.
 - Use neutral file names like `analytics.ts` (not legacy provider names such as `aptabase.ts`).
 - Avoid re-exporting `PAYWALL_EVENTS` / `PURCHASE_EVENTS` from host app utility files. Import SDK constants directly when needed, or use `createPaywallTracker(...)`.
 - Prefer SDK identity helpers (`setUser`, `identify`, `clearUser`) directly instead of wrapping identify logic in host-app boilerplate.
@@ -44,11 +45,9 @@ See [Versioning Notes](references/versioning.md).
 ## Minimal Web Setup
 
 ```ts
-import { init } from '@prodinfos/sdk-ts';
+import { initFromEnv } from '@prodinfos/sdk-ts';
 
-const analytics = init({
-  apiKey: process.env.PRODINFOS_WRITE_KEY!,
-  projectId: process.env.PRODINFOS_PROJECT_ID!,
+const analytics = initFromEnv({
   debug: false,
   platform: 'web',
   appVersion: '1.0.0',
@@ -56,15 +55,21 @@ const analytics = init({
 });
 ```
 
+Default env key lookup order:
+- API key: `PRODINFOS_WRITE_KEY`, `NEXT_PUBLIC_PRODINFOS_WRITE_KEY`, `EXPO_PUBLIC_PRODINFOS_WRITE_KEY`, `VITE_PRODINFOS_WRITE_KEY`
+- Project id: `PRODINFOS_PROJECT_ID`, `NEXT_PUBLIC_PRODINFOS_PROJECT_ID`, `EXPO_PUBLIC_PRODINFOS_PROJECT_ID`, `VITE_PRODINFOS_PROJECT_ID`
+
+Missing config behavior:
+- default is safe no-op client
+- use `missingConfigMode: 'throw'` when startup should fail fast
+
 ## React Native Setup
 
 ```ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { init } from '@prodinfos/sdk-ts';
+import { initFromEnv } from '@prodinfos/sdk-ts';
 
-const analytics = init({
-  apiKey: process.env.PRODINFOS_WRITE_KEY!,
-  projectId: process.env.PRODINFOS_PROJECT_ID!,
+const analytics = initFromEnv({
   debug: typeof __DEV__ === 'boolean' ? __DEV__ : false,
   platform: 'react-native',
   appVersion: '1.0.0',

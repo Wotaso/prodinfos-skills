@@ -32,27 +32,6 @@ npx -y clawhub install prodinfos-ts-sdk
 | `prodinfos-cli` | Query analytics, validate instrumentation, export bounded data | `@prodinfos/cli` `^0.1.0` |
 | `prodinfos-ts-sdk` | Integrate or upgrade the JS/TS SDK in web, React Native, or Expo apps | `@prodinfos/sdk-ts` `>=0.1.0-preview.0 <0.2.0` |
 
-## Writing Perspective
-
-- Tenant-facing instructions should be written from the tenant developer perspective.
-- Prefer wording like `your app`, `your workspace`, and `your project`.
-- Avoid provider-centric phrasing such as `our SaaS dashboard`.
-
-## Repo Layout
-
-```text
-.
-├── README.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── prodinfos-cli/
-│   ├── SKILL.md
-│   └── references/
-├── prodinfos-ts-sdk/
-│   ├── SKILL.md
-│   └── references/
-```
-
 ## Versioning Policy
 
 - `metadata.version` inside a `SKILL.md` is the version of the skill instructions.

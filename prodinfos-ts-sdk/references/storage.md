@@ -17,11 +17,9 @@ Storage is optional in `@prodinfos/sdk-ts`.
 ## Minimal Example
 
 ```ts
-import { init } from '@prodinfos/sdk-ts';
+import { initFromEnv } from '@prodinfos/sdk-ts';
 
-const analytics = init({
-  apiKey,
-  projectId,
+const analytics = initFromEnv({
   debug: false,
 });
 ```
@@ -30,11 +28,9 @@ const analytics = init({
 
 ```ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { init } from '@prodinfos/sdk-ts';
+import { initFromEnv } from '@prodinfos/sdk-ts';
 
-const analytics = init({
-  apiKey,
-  projectId,
+const analytics = initFromEnv({
   debug: typeof __DEV__ === 'boolean' ? __DEV__ : false,
   platform: 'react-native',
   storage: {
@@ -51,13 +47,11 @@ void analytics.ready();
 
 ```ts
 import { MMKV } from 'react-native-mmkv';
-import { init } from '@prodinfos/sdk-ts';
+import { initFromEnv } from '@prodinfos/sdk-ts';
 
 const kv = new MMKV();
 
-const analytics = init({
-  apiKey,
-  projectId,
+const analytics = initFromEnv({
   debug: typeof __DEV__ === 'boolean' ? __DEV__ : false,
   storage: {
     getItem: (key) => kv.getString(key) ?? null,
