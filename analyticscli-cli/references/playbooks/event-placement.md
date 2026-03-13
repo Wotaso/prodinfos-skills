@@ -70,8 +70,8 @@ Paywall and purchase properties:
 ## Validation Loop
 
 ```bash
-prodinfos schema events --project <id> --limit 200
-prodinfos goal-completion --project <id> --start onboarding:start --complete onboarding:complete --last 30d
-prodinfos goal-completion --project <id> --start onboarding:start --complete purchase:success --last 30d
-prodinfos goal-completion --project <id> --start paywall:shown --complete paywall:skip --last 30d
+analyticscli schema events --project <id> --limit 200
+analyticscli goal-completion --project <id> --start onboarding:start --complete onboarding:complete --last 30d
+analyticscli goal-completion --project <id> --start onboarding:start --complete purchase:success --last 30d
+analyticscli goal-completion --project <id> --start paywall:shown --complete paywall:skip --last 30d
 ```

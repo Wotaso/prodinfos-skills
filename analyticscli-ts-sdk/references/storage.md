@@ -1,6 +1,6 @@
 # Storage Options
 
-Storage is optional in `@prodinfos/sdk-ts`.
+Storage is optional in `react-native-analyticscli`.
 
 - Without storage: fastest setup, but IDs reset after app restarts.
 - With storage: stable `anonId` and `sessionId` across restarts, better continuity for retention and funnels.
@@ -17,7 +17,7 @@ Storage is optional in `@prodinfos/sdk-ts`.
 ## Minimal Example
 
 ```ts
-import { init } from '@prodinfos/sdk-ts';
+import { init } from 'react-native-analyticscli';
 
 const analytics = init('<YOUR_APP_KEY>');
 ```
@@ -28,10 +28,10 @@ const analytics = init('<YOUR_APP_KEY>');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
-import { init } from '@prodinfos/sdk-ts';
+import { init } from 'react-native-analyticscli';
 
 const analytics = init({
-  apiKey: process.env.EXPO_PUBLIC_PRODINFOS_WRITE_KEY,
+  apiKey: process.env.EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY,
   debug: typeof __DEV__ === 'boolean' ? __DEV__ : false,
   platform:
     Platform.OS === 'ios' ||
@@ -58,12 +58,12 @@ void analytics.ready();
 ```ts
 import { MMKV } from 'react-native-mmkv';
 import { Platform } from 'react-native';
-import { init } from '@prodinfos/sdk-ts';
+import { init } from 'react-native-analyticscli';
 
 const kv = new MMKV();
 
 const analytics = init({
-  apiKey: process.env.EXPO_PUBLIC_PRODINFOS_WRITE_KEY,
+  apiKey: process.env.EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY,
   debug: typeof __DEV__ === 'boolean' ? __DEV__ : false,
   platform:
     Platform.OS === 'ios' ||

@@ -1,6 +1,6 @@
 # Onboarding And Paywall Contract
 
-Prodinfos has strong support for onboarding and paywall funnel analytics, but that only works reliably if instrumentation follows a strict event contract.
+AnalyticsCLI has strong support for onboarding and paywall funnel analytics, but that only works reliably if instrumentation follows a strict event contract.
 
 ## Use The SDK Wrappers
 
@@ -140,4 +140,4 @@ paywall.purchaseSuccess({
 - missing `paywallId` or `source`
 - mixing screen-view semantics with funnel milestones
 - instrumenting only onboarding/paywall while skipping core product value events
-- keeping old analytics provider as primary after Prodinfos migration
+- keeping old analytics provider as primary after AnalyticsCLI migration

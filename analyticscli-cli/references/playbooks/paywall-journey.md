@@ -37,17 +37,17 @@ Understand conversion from paywall entry to purchase success and identify dropof
 Funnel:
 
 ```bash
-prodinfos funnel --project <id> --steps paywall:shown,purchase:started,purchase:success --last 30d
+analyticscli funnel --project <id> --steps paywall:shown,purchase:started,purchase:success --last 30d
 ```
 
 Entry-screen conversion:
 
 ```bash
-prodinfos breakdown --project <id> --type conversion_after --from paywall:shown --to purchase:success --by fromScreen --last 30d
+analyticscli breakdown --project <id> --type conversion_after --from paywall:shown --to purchase:success --by fromScreen --last 30d
 ```
 
 Dismiss trend:
 
 ```bash
-prodinfos timeseries --project <id> --metric event_count --event paywall:skip --interval 1d --last 30d --viz table
+analyticscli timeseries --project <id> --metric event_count --event paywall:skip --interval 1d --last 30d --viz table
 ```

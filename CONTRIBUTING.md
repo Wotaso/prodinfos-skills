@@ -1,6 +1,6 @@
 # Contributing
 
-This repository is a public mirror of the Prodinfos skill pack.
+This repository is a public mirror of the AnalyticsCLI skill pack.
 
 ## Before You Change Anything
 

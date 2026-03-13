@@ -1,26 +1,26 @@
 ---
-name: prodinfos-ts-sdk
-description: Use when integrating or upgrading the Prodinfos TypeScript SDK in web, TypeScript, React Native, or Expo apps.
+name: analyticscli-ts-sdk
+description: Use when integrating or upgrading the AnalyticsCLI TypeScript SDK in web, TypeScript, React Native, or Expo apps.
 license: MIT
-homepage: https://github.com/wotaso/prodinfos-skills
-metadata: {"author":"wotaso","version":"1.6.0","prodinfos-target":"@prodinfos/sdk-ts","prodinfos-supported-range":">=0.1.0-preview.3 <0.2.0","openclaw":{"emoji":"🧩","homepage":"https://github.com/wotaso/prodinfos-skills"}}
+homepage: https://github.com/wotaso/analyticscli-skills
+metadata: {"author":"wotaso","version":"1.6.0","analyticscli-target":"react-native-analyticscli","analyticscli-supported-range":">=0.1.0-preview.3 <0.2.0","openclaw":{"emoji":"🧩","homepage":"https://github.com/wotaso/analyticscli-skills"}}
 ---
 
-# Prodinfos TypeScript SDK
+# AnalyticsCLI TypeScript SDK
 
 ## Use This Skill When
 
-- adding Prodinfos analytics to a JS or TS app
+- adding AnalyticsCLI analytics to a JS or TS app
 - instrumenting onboarding, paywall, purchase, or survey events
-- upgrading within the current `@prodinfos/sdk-ts` line
-- validating SDK behavior together with `@prodinfos/cli`
+- upgrading within the current `react-native-analyticscli` line
+- validating SDK behavior together with `analyticscli`
 
 ## Supported Versions
 
 - Skill pack: `1.6.0`
-- Target package: `@prodinfos/sdk-ts`
+- Target package: `react-native-analyticscli`
 - Supported range: `>=0.1.0-preview.3 <0.2.0`
-- If a future SDK major changes APIs or event contracts in incompatible ways, add a sibling skill such as `prodinfos-ts-sdk-v1`
+- If a future SDK major changes APIs or event contracts in incompatible ways, add a sibling skill such as `analyticscli-ts-sdk-v1`
 
 See [Versioning Notes](references/versioning.md).
 
@@ -45,10 +45,10 @@ See [Versioning Notes](references/versioning.md).
 - Use neutral file names like `analytics.ts` (not provider-specific names such as `aptabase.ts`).
 - Avoid re-exporting `PAYWALL_EVENTS` / `PURCHASE_EVENTS` from host app utility files. Import SDK constants directly when needed, or use `createPaywallTracker(...)`.
 - Prefer SDK identity helpers (`setUser`, `identify`, `clearUser`) directly instead of wrapping identify logic in host-app boilerplate.
-- If another analytics provider already exists, migrate it to Prodinfos as the primary provider instead of running permanent dual tracking.
+- If another analytics provider already exists, migrate it to AnalyticsCLI as the primary provider instead of running permanent dual tracking.
 - For generated docs or README snippets, write from tenant developer perspective (`your app`, `your workspace`) and avoid provider-centric phrasing such as `our SaaS`.
 - Default to canonical SDK event names at call sites.
-- Before generating host-app code, ensure `@prodinfos/sdk-ts` is upgraded to the newest preview in that repo.
+- Before generating host-app code, ensure `react-native-analyticscli` is upgraded to the newest preview in that repo.
 
 ## Host App Minimalism Guardrails
 
@@ -89,9 +89,9 @@ Before finishing, verify the generated integration code meets all checks:
 ## Minimal Web Setup
 
 ```ts
-import { init } from '@prodinfos/sdk-ts';
+import { init } from 'react-native-analyticscli';
 
-const analytics = init(process.env.NEXT_PUBLIC_PRODINFOS_WRITE_KEY ?? '');
+const analytics = init(process.env.NEXT_PUBLIC_ANALYTICSCLI_WRITE_KEY ?? '');
 ```
 
 `init(...)` accepts:
@@ -99,7 +99,7 @@ const analytics = init(process.env.NEXT_PUBLIC_PRODINFOS_WRITE_KEY ?? '');
 - object form: `init({ apiKey: '<YOUR_APP_KEY>', ...optionalConfig })`
 
 `initFromEnv(...)` env key lookup order:
-- API key: `PRODINFOS_WRITE_KEY`, `NEXT_PUBLIC_PRODINFOS_WRITE_KEY`, `EXPO_PUBLIC_PRODINFOS_WRITE_KEY`, `VITE_PRODINFOS_WRITE_KEY`
+- API key: `ANALYTICSCLI_WRITE_KEY`, `NEXT_PUBLIC_ANALYTICSCLI_WRITE_KEY`, `EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY`, `VITE_ANALYTICSCLI_WRITE_KEY`
 
 Missing config behavior:
 - default is safe no-op client when API key is missing
@@ -111,10 +111,10 @@ Missing config behavior:
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
-import { init } from '@prodinfos/sdk-ts';
+import { init } from 'react-native-analyticscli';
 
 const analytics = init({
-  apiKey: process.env.EXPO_PUBLIC_PRODINFOS_WRITE_KEY,
+  apiKey: process.env.EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY,
   debug: typeof __DEV__ === 'boolean' ? __DEV__ : false,
   platform:
     Platform.OS === 'ios' ||
@@ -160,8 +160,8 @@ The integration should cover more than SDK bootstrap:
 
 When existing analytics code is present (for example Aptabase, Firebase Analytics, Segment):
 
-1. Replace the old provider as the default event sink with Prodinfos.
-2. Prefer migrating call sites to canonical Prodinfos event names directly.
+1. Replace the old provider as the default event sink with AnalyticsCLI.
+2. Prefer migrating call sites to canonical AnalyticsCLI event names directly.
 3. Use temporary dual-write only during a defined migration window and remove it after validation.
 
 ## Validation Loop
@@ -169,9 +169,9 @@ When existing analytics code is present (for example Aptabase, Firebase Analytic
 After integration or upgrade, verify ingestion with stable CLI checks:
 
 ```bash
-prodinfos schema events --project <projectId>
-prodinfos goal-completion --project <projectId> --start onboarding:start --complete onboarding:complete --last 30d
-prodinfos get onboarding-journey --project <projectId> --last 30d --format text
+analyticscli schema events --project <projectId>
+analyticscli goal-completion --project <projectId> --start onboarding:start --complete onboarding:complete --last 30d
+analyticscli get onboarding-journey --project <projectId> --last 30d --format text
 ```
 
 ## References

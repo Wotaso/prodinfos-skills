@@ -1,25 +1,25 @@
 ---
-name: prodinfos-cli
-description: Use Prodinfos CLI as the deterministic, bounded interface for analytics queries, exports, and SDK validation in coding-agent workflows.
+name: analyticscli-cli
+description: Use AnalyticsCLI CLI as the deterministic, bounded interface for analytics queries, exports, and SDK validation in coding-agent workflows.
 license: MIT
-homepage: https://github.com/wotaso/prodinfos-skills
-metadata: {"author":"wotaso","version":"1.0.0","prodinfos-target":"@prodinfos/cli","prodinfos-supported-range":"^0.1.0","openclaw":{"emoji":"📈","homepage":"https://github.com/wotaso/prodinfos-skills","requires":{"bins":["prodinfos"]},"install":[{"id":"npm","kind":"node","package":"@prodinfos/cli","bins":["prodinfos"],"label":"Install Prodinfos CLI (npm)"}]}}
+homepage: https://github.com/wotaso/analyticscli-skills
+metadata: {"author":"wotaso","version":"1.0.0","analyticscli-target":"analyticscli","analyticscli-supported-range":"^0.1.0","openclaw":{"emoji":"📈","homepage":"https://github.com/wotaso/analyticscli-skills","requires":{"bins":["analyticscli"]},"install":[{"id":"npm","kind":"node","package":"analyticscli","bins":["analyticscli"],"label":"Install AnalyticsCLI CLI (npm)"}]}}
 ---
 
-# Prodinfos CLI
+# AnalyticsCLI CLI
 
 ## Use This Skill When
 
-- querying product analytics for a Prodinfos project
+- querying product analytics for a AnalyticsCLI project
 - validating whether SDK instrumentation landed correctly
 - answering onboarding, paywall, survey, retention, or export questions without raw SQL
 
 ## Supported Versions
 
 - Skill pack: `1.0.0`
-- Target package: `@prodinfos/cli`
+- Target package: `analyticscli`
 - Supported range: `^0.1.0`
-- If a future CLI major changes commands or flags in incompatible ways, split to a sibling skill such as `prodinfos-cli-v1`
+- If a future CLI major changes commands or flags in incompatible ways, split to a sibling skill such as `analyticscli-cli-v1`
 
 See [Versioning Notes](references/versioning.md).
 
@@ -65,15 +65,15 @@ Only use `events export` when the user explicitly needs raw CSV.
 Preferred:
 
 ```bash
-npm i -g @prodinfos/cli
-prodinfos setup --token <readonly_token>
+npm i -g analyticscli
+analyticscli setup --token <readonly_token>
 ```
 
 Alternatives:
 
 ```bash
-prodinfos login --readonly-token <readonly_token>
-prodinfos login --clerk-jwt <clerk_jwt>
+analyticscli login --readonly-token <readonly_token>
+analyticscli login --clerk-jwt <clerk_jwt>
 ```
 
 ## Output Mode
@@ -88,9 +88,9 @@ prodinfos login --clerk-jwt <clerk_jwt>
 After SDK rollout or query changes, validate with a few stable reads:
 
 ```bash
-prodinfos schema events --project <id> --limit 200
-prodinfos goal-completion --project <id> --start onboarding:start --complete onboarding:complete --last 30d
-prodinfos get onboarding-journey --project <id> --last 30d --format text
+analyticscli schema events --project <id> --limit 200
+analyticscli goal-completion --project <id> --start onboarding:start --complete onboarding:complete --last 30d
+analyticscli get onboarding-journey --project <id> --last 30d --format text
 ```
 
 ## Missing Capability Loop
@@ -102,7 +102,7 @@ If the requested fetch is impossible with the current CLI surface:
 3. Submit CLI feedback with a reproducible gap report.
 
 ```bash
-PRODINFOS_CLI_ENABLE_WRITE_COMMANDS=true prodinfos feedback submit \
+ANALYTICSCLI_CLI_ENABLE_WRITE_COMMANDS=true analyticscli feedback submit \
   --category feature \
   --message "Missing CLI functionality: <short capability>" \
   --context "Requested fetch: <what user asked>; attempted command: <command>" \

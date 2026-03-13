@@ -35,11 +35,11 @@ Measure where review prompts are shown and which placements correlate with posit
 Completion after shown:
 
 ```bash
-prodinfos conversion-after --project <id> --from review_prompt:shown --to review_prompt:result --last 30d
+analyticscli conversion-after --project <id> --from review_prompt:shown --to review_prompt:result --last 30d
 ```
 
 Breakdown by screen:
 
 ```bash
-prodinfos breakdown --project <id> --type conversion_after --from review_prompt:shown --to review_prompt:result --by screen --last 30d
+analyticscli breakdown --project <id> --type conversion_after --from review_prompt:shown --to review_prompt:result --by screen --last 30d
 ```
