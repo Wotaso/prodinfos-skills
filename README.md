@@ -4,33 +4,32 @@ Installable Agent Skills for tenant developers integrating AnalyticsCLI analytic
 
 ## Install
 
-Install the analytics/query skill:
+Install the skill pack (recommended):
 
 ```bash
-npx skills add wotaso/analyticscli-skills --skill analyticscli-cli
+npx skills add wotaso/analyticscli-skills
 ```
 
-Install the TypeScript SDK integration skill:
+Optional: install a specific skill only:
 
 ```bash
-npx skills add wotaso/analyticscli-skills --skill analyticscli-ts-sdk
+npx skills add wotaso/analyticscli-skills --skill <skill-name>
 ```
 
-If you want both, run both commands.
+`<skill-name>` can be any entry from the table below (for example `analyticscli-cli` or `analyticscli-ts-sdk`).
 
 For OpenClaw via ClawHub:
 
 ```bash
-npx -y clawhub install analyticscli-cli
-npx -y clawhub install analyticscli-ts-sdk
+npx -y clawhub install <skill-name>
 ```
 
 ## Included Skills
 
 | Skill | Use it for | Target package |
 | --- | --- | --- |
-| `analyticscli-cli` | Query analytics, validate instrumentation, export bounded data | `analyticscli` `^0.1.0` |
-| `analyticscli-ts-sdk` | Integrate or upgrade the JS/TS SDK in web, React Native, or Expo apps | `react-native-analyticscli` `>=0.1.0-preview.0 <0.2.0` |
+| `analyticscli-cli` | Query analytics, validate instrumentation, export bounded data | `@analyticscli/cli` `^0.1.0` |
+| `analyticscli-ts-sdk` | Integrate or upgrade the JS/TS SDK in web, React Native, or Expo apps | `@analyticscli/sdk` `>=0.1.0-preview.0 <0.2.0` |
 
 ## Versioning Policy
 

@@ -3,7 +3,7 @@ name: analyticscli-ts-sdk
 description: Use when integrating or upgrading the AnalyticsCLI TypeScript SDK in web, TypeScript, React Native, or Expo apps.
 license: MIT
 homepage: https://github.com/wotaso/analyticscli-skills
-metadata: {"author":"wotaso","version":"1.6.0","analyticscli-target":"react-native-analyticscli","analyticscli-supported-range":">=0.1.0-preview.3 <0.2.0","openclaw":{"emoji":"🧩","homepage":"https://github.com/wotaso/analyticscli-skills"}}
+metadata: {"author":"wotaso","version":"1.6.0","analyticscli-target":"@analyticscli/sdk","analyticscli-supported-range":">=0.1.0-preview.3 <0.2.0","openclaw":{"emoji":"🧩","homepage":"https://github.com/wotaso/analyticscli-skills"}}
 ---
 
 # AnalyticsCLI TypeScript SDK
@@ -12,13 +12,13 @@ metadata: {"author":"wotaso","version":"1.6.0","analyticscli-target":"react-nati
 
 - adding AnalyticsCLI analytics to a JS or TS app
 - instrumenting onboarding, paywall, purchase, or survey events
-- upgrading within the current `react-native-analyticscli` line
+- upgrading within the current `@analyticscli/sdk` line
 - validating SDK behavior together with `analyticscli`
 
 ## Supported Versions
 
 - Skill pack: `1.6.0`
-- Target package: `react-native-analyticscli`
+- Target package: `@analyticscli/sdk`
 - Supported range: `>=0.1.0-preview.3 <0.2.0`
 - If a future SDK major changes APIs or event contracts in incompatible ways, add a sibling skill such as `analyticscli-ts-sdk-v1`
 
@@ -48,7 +48,7 @@ See [Versioning Notes](references/versioning.md).
 - If another analytics provider already exists, migrate it to AnalyticsCLI as the primary provider instead of running permanent dual tracking.
 - For generated docs or README snippets, write from tenant developer perspective (`your app`, `your workspace`) and avoid provider-centric phrasing such as `our SaaS`.
 - Default to canonical SDK event names at call sites.
-- Before generating host-app code, ensure `react-native-analyticscli` is upgraded to the newest preview in that repo.
+- Before generating host-app code, ensure `@analyticscli/sdk` is upgraded to the newest preview in that repo.
 
 ## Host App Minimalism Guardrails
 
@@ -89,7 +89,7 @@ Before finishing, verify the generated integration code meets all checks:
 ## Minimal Web Setup
 
 ```ts
-import { init } from 'react-native-analyticscli';
+import { init } from '@analyticscli/sdk';
 
 const analytics = init(process.env.NEXT_PUBLIC_ANALYTICSCLI_WRITE_KEY ?? '');
 ```
@@ -111,7 +111,7 @@ Missing config behavior:
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
-import { init } from 'react-native-analyticscli';
+import { init } from '@analyticscli/sdk';
 
 const analytics = init({
   apiKey: process.env.EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY,

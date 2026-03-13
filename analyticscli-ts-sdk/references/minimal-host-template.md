@@ -16,7 +16,7 @@ Keep host code small and explicit:
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
-import { init } from 'react-native-analyticscli';
+import { init } from '@analyticscli/sdk';
 
 export const analytics = init({
   apiKey: process.env.EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY,
@@ -45,7 +45,7 @@ void analytics.ready();
 ## Call-Site Template
 
 ```ts
-import { PAYWALL_EVENTS, PURCHASE_EVENTS } from 'react-native-analyticscli';
+import { PAYWALL_EVENTS, PURCHASE_EVENTS } from '@analyticscli/sdk';
 import { analytics } from '@/utils/analytics';
 
 analytics.screen('onboarding_region');

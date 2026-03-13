@@ -1,6 +1,6 @@
 # Storage Options
 
-Storage is optional in `react-native-analyticscli`.
+Storage is optional in `@analyticscli/sdk`.
 
 - Without storage: fastest setup, but IDs reset after app restarts.
 - With storage: stable `anonId` and `sessionId` across restarts, better continuity for retention and funnels.
@@ -17,7 +17,7 @@ Storage is optional in `react-native-analyticscli`.
 ## Minimal Example
 
 ```ts
-import { init } from 'react-native-analyticscli';
+import { init } from '@analyticscli/sdk';
 
 const analytics = init('<YOUR_APP_KEY>');
 ```
@@ -28,7 +28,7 @@ const analytics = init('<YOUR_APP_KEY>');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Application from 'expo-application';
 import { Platform } from 'react-native';
-import { init } from 'react-native-analyticscli';
+import { init } from '@analyticscli/sdk';
 
 const analytics = init({
   apiKey: process.env.EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY,
@@ -58,7 +58,7 @@ void analytics.ready();
 ```ts
 import { MMKV } from 'react-native-mmkv';
 import { Platform } from 'react-native';
-import { init } from 'react-native-analyticscli';
+import { init } from '@analyticscli/sdk';
 
 const kv = new MMKV();
 
