@@ -27,11 +27,6 @@ npx skills add wotaso/analyticscli-skills
 - If a future major release needs materially different instructions, add a sibling skill such as `analyticscli-ts-sdk-v1` instead of mixing incompatible majors into one file.
 - Use Git tags and release notes on this public repo for distribution history.
 
-## OpenClaw
-
-The same skill folders work for OpenClaw because they follow the Agent Skills `SKILL.md` format.
-You do not need a second skill format for OpenClaw.
-
 ## Support Model
 
 - Open issues in the public repo for install problems or unclear instructions.
