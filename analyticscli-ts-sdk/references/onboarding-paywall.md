@@ -55,6 +55,20 @@ Avoid:
 | `purchase:failed` | Purchase failed | `source`, `paywallId`, `packageId`, `appVersion` |
 | `purchase:cancel` | In-app purchase cancel intent detected | `source`, `paywallId`, `packageId`, `appVersion` |
 
+## Duplicate Tracking Prevention
+
+- SDK built-in dedupe is scoped to `onboarding:step_view` only, and only when `dedupeOnboardingStepViewsPerSession` is enabled.
+- SDK does not automatically dedupe paywall, purchase, or `screen:*` events.
+- Assign a single owner for each funnel boundary (route-level or component-level, not both).
+- Do not track the same screen transition from both parent layout and child screen hooks.
+- For each paywall attempt, emit one `paywall:shown`.
+- For each purchase attempt, emit one `purchase:started` and exactly one terminal event:
+  - `purchase:cancel`
+  - `purchase:failed`
+  - `purchase:success`
+- Use `createPaywallTracker(...)` so events share one `paywallEntryId`; this improves correlation and duplicate detection in analysis, but it does not dedupe automatically.
+- If multiple callbacks can fire during re-render/re-mount, gate emissions with a session-local idempotency key.
+
 ## Screen View Coverage
 
 Track screen views for all funnel-relevant screens:

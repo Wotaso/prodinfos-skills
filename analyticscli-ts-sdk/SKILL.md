@@ -155,6 +155,10 @@ The integration should cover more than SDK bootstrap:
 - Use `trackPaywallEvent(...)` for one-off paywall and purchase milestones.
 - Use canonical event names from `ONBOARDING_EVENTS`, `PAYWALL_EVENTS`, and `PURCHASE_EVENTS`.
 - Keep `onboardingFlowId`, `onboardingFlowVersion`, `paywallId`, `source`, and `appVersion` stable.
+- The SDK built-in dedupe currently applies only to `onboarding:step_view` when `dedupeOnboardingStepViewsPerSession` is enabled.
+- Prevent duplicate tracking for the same user action across nested layouts/components.
+- Use a single tracking owner per route or lifecycle boundary; if multiple hooks can fire, gate with a session-local idempotency key.
+- For each paywall attempt, emit each milestone once (`paywall:shown`, `purchase:started`, and one terminal event: `purchase:cancel` or `purchase:failed` or `purchase:success`).
 
 ## Legacy Provider Migration Rule
 
