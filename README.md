@@ -4,24 +4,12 @@ Installable Agent Skills for tenant developers integrating AnalyticsCLI analytic
 
 ## Install
 
+With this installer, you can install these skills into any coding agent, including OpenClaw.
+
 Install the skill pack (recommended):
 
 ```bash
 npx skills add wotaso/analyticscli-skills
-```
-
-Optional: install a specific skill only:
-
-```bash
-npx skills add wotaso/analyticscli-skills --skill <skill-name>
-```
-
-`<skill-name>` can be any entry from the table below (for example `analyticscli-cli` or `analyticscli-ts-sdk`).
-
-For OpenClaw via ClawHub:
-
-```bash
-npx -y clawhub install <skill-name>
 ```
 
 ## Included Skills
@@ -43,14 +31,6 @@ npx -y clawhub install <skill-name>
 
 The same skill folders work for OpenClaw because they follow the Agent Skills `SKILL.md` format.
 You do not need a second skill format for OpenClaw.
-
-If you also want store-style discovery or versioned bundle distribution inside the OpenClaw ecosystem, publish the same folders to ClawHub as an additional channel.
-
-Sync all skills to ClawHub from the monorepo:
-
-```bash
-pnpm skills:sync:clawhub -- --all --tags latest
-```
 
 ## Support Model
 
