@@ -30,7 +30,7 @@ See [Versioning Notes](references/versioning.md).
 - Prefer `init('<YOUR_APP_KEY>')` shortform for the smallest setup.
 - `initFromEnv(...)` is also valid when env-first bootstrap is preferred.
 - Keep init options minimal: all init attributes are optional; `apiKey` is enough for ingest.
-- In host apps, prefer env names that communicate client-safe usage (for example `ANALYTICSCLI_PUBLISHABLE_API_KEY`), while keeping `*_WRITE_KEY` names as compatibility aliases.
+- In host apps, use client-safe publishable env names (for example `ANALYTICSCLI_PUBLISHABLE_API_KEY`).
 - `runtimeEnv` is auto-attached. Do not pass a `mode` string.
 - `debug` is only a boolean for SDK console logging.
 - Do not pass `endpoint` and do not add endpoint env vars in app templates. Use the SDK default collector endpoint.
@@ -43,6 +43,7 @@ See [Versioning Notes](references/versioning.md).
 - Keep event properties stable and query-relevant.
 - Avoid direct PII.
 - Use storage when you need stable `anonId` and `sessionId` across restarts.
+- In generated host-app bootstrap code, set `storage` explicitly using the storage library already installed in that project (for web, `localStorage` is enough).
 - Avoid top-level `Promise` singletons in app utility files.
 - Use neutral file names like `analytics.ts` (not provider-specific names such as `aptabase.ts`).
 - Avoid re-exporting `PAYWALL_EVENTS` / `PURCHASE_EVENTS` from host app utility files. Import SDK constants directly when needed, or use `createPaywallTracker(...)`.
@@ -88,16 +89,25 @@ Before finishing, verify the generated integration code meets all checks:
 5. identity uses SDK methods directly (`identify`/`setUser`/`clearUser`) without extra wrappers
 6. `platform` is `web`/`ios`/`android`/`mac`/`windows` or omitted (never framework labels)
 
+## Dashboard Credentials Checklist
+
+Before SDK bootstrap, collect the required values from your dashboard:
+
+- Open [dash.analyticscli.com](https://dash.analyticscli.com) and select the target project.
+- In **API Keys**, copy the publishable ingest API key for SDK init.
+- If you will verify ingestion with CLI, create/copy a CLI `readonly_token` in the same **API Keys** area.
+- Optional for CLI verification: set a default project once with `analyticscli projects select` (arrow-key picker), or pass `--project <project_id>` per command.
+
 ## Minimal Web Setup
 
 ```ts
 import { init } from '@analyticscli/sdk';
 
-const analytics = init(
-  process.env.NEXT_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY ??
-    process.env.NEXT_PUBLIC_ANALYTICSCLI_WRITE_KEY ??
-    '',
-);
+const analytics = init({
+  apiKey: process.env.NEXT_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY ?? '',
+  platform: 'web',
+  storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+});
 ```
 
 `init(...)` accepts:
@@ -105,8 +115,7 @@ const analytics = init(
 - object form: `init({ apiKey: '<YOUR_APP_KEY>', ...optionalConfig })`
 
 `initFromEnv(...)` default env key lookup order:
-- API key (publishable first): `ANALYTICSCLI_PUBLISHABLE_API_KEY`, `NEXT_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY`, `EXPO_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY`, `VITE_ANALYTICSCLI_PUBLISHABLE_API_KEY`
-- compatibility fallback: `ANALYTICSCLI_WRITE_KEY`, `NEXT_PUBLIC_ANALYTICSCLI_WRITE_KEY`, `EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY`, `VITE_ANALYTICSCLI_WRITE_KEY`
+- API key: `ANALYTICSCLI_PUBLISHABLE_API_KEY`, `NEXT_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY`, `EXPO_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY`, `VITE_ANALYTICSCLI_PUBLISHABLE_API_KEY`
 
 If the host app uses custom env naming, set `apiKeyEnvKeys` explicitly.
 
@@ -123,9 +132,7 @@ import { Platform } from 'react-native';
 import { init } from '@analyticscli/sdk';
 
 const analytics = init({
-  apiKey:
-    process.env.EXPO_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY ??
-    process.env.EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY,
+  apiKey: process.env.EXPO_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY,
   debug: __DEV__,
   platform: Platform.OS,
   appVersion: Application.nativeApplicationVersion,
@@ -133,7 +140,7 @@ const analytics = init({
 });
 ```
 
-`ready()` is optional; tracking starts on `init(...)`.
+There is no "do not start yet" init flag. Tracking starts on `init(...)`; `ready()` (or `initAsync(...)`) is only for explicitly blocking first-flow logic until async storage hydration is done.
 
 ## Integration Depth Checklist
 
@@ -170,9 +177,9 @@ When existing analytics code is present (for example Aptabase, Firebase Analytic
 After integration or upgrade, verify ingestion with stable CLI checks:
 
 ```bash
-analyticscli schema events --project <projectId>
-analyticscli goal-completion --project <projectId> --start onboarding:start --complete onboarding:complete --last 30d
-analyticscli get onboarding-journey --project <projectId> --last 30d --format text
+analyticscli schema events
+analyticscli goal-completion --start onboarding:start --complete onboarding:complete --last 30d
+analyticscli get onboarding-journey --last 30d --format text
 ```
 
 ## References

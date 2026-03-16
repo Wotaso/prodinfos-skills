@@ -10,6 +10,27 @@ Keep host code small and explicit:
 - direct SDK calls in feature code
 - no large translation layer
 
+## Dashboard Credentials
+
+Before bootstrap code is added:
+
+- Open [dash.analyticscli.com](https://dash.analyticscli.com) and select the target project.
+- In **API Keys**, copy the publishable ingest API key for SDK init.
+- If CLI validation is in scope, create/copy a CLI `readonly_token` in the same **API Keys** area.
+- Optional for CLI verification: set a default project once with `analyticscli projects select` (arrow-key picker), or pass `--project <project_id>` per command.
+
+## Bootstrap Template (Web)
+
+```ts
+import { init } from '@analyticscli/sdk';
+
+export const analytics = init({
+  apiKey: process.env.NEXT_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY ?? '',
+  platform: 'web',
+  storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+});
+```
+
 ## Bootstrap Template (React Native / Expo)
 
 ```ts
@@ -19,15 +40,15 @@ import { Platform } from 'react-native';
 import { init } from '@analyticscli/sdk';
 
 export const analytics = init({
-  apiKey:
-    process.env.EXPO_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY ??
-    process.env.EXPO_PUBLIC_ANALYTICSCLI_WRITE_KEY,
+  apiKey: process.env.EXPO_PUBLIC_ANALYTICSCLI_PUBLISHABLE_API_KEY,
   debug: __DEV__,
   platform: Platform.OS,
   appVersion: Application.nativeApplicationVersion,
   storage: AsyncStorage,
 });
 ```
+
+`ready()` does not start tracking. It is only for blocking flow transitions until async storage hydration finishes.
 
 ## Call-Site Template
 

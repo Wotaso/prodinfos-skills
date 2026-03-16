@@ -4,6 +4,12 @@
 
 Understand conversion from paywall entry to purchase success and identify dropoff steps.
 
+## Credential Source
+
+- Get `readonly_token` (CLI) and publishable ingest API key (SDK) in project **API Keys** at [dash.analyticscli.com](https://dash.analyticscli.com).
+- Optional: get `project_id` from project context for explicit `--project` overrides.
+- Preferred: set the CLI default project once with `analyticscli projects select` (arrow-key picker).
+
 ## Recommended Events
 
 - `paywall:shown`
@@ -37,17 +43,17 @@ Understand conversion from paywall entry to purchase success and identify dropof
 Funnel:
 
 ```bash
-analyticscli funnel --project <id> --steps paywall:shown,purchase:started,purchase:success --last 30d
+analyticscli funnel --steps paywall:shown,purchase:started,purchase:success --last 30d
 ```
 
 Entry-screen conversion:
 
 ```bash
-analyticscli breakdown --project <id> --type conversion_after --from paywall:shown --to purchase:success --by fromScreen --last 30d
+analyticscli breakdown --type conversion_after --from paywall:shown --to purchase:success --by fromScreen --last 30d
 ```
 
 Dismiss trend:
 
 ```bash
-analyticscli timeseries --project <id> --metric event_count --event paywall:skip --interval 1d --last 30d --viz table
+analyticscli timeseries --metric event_count --event paywall:skip --interval 1d --last 30d --viz table
 ```

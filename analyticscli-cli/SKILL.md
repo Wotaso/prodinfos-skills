@@ -31,7 +31,7 @@ See [Versioning Notes](references/versioning.md).
 
 ## Safety Rules
 
-- Always scope by project: `--project <id>`.
+- Always scope by project context: set default once with `analyticscli projects select`, or pass `--project <id>` when needed.
 - Always scope by time: `--last` or explicit `since/until`.
 - Prefer high-level query endpoints over raw exports.
 - Keep groupings and result sets bounded.
@@ -62,6 +62,14 @@ Only use `events export` when the user explicitly needs raw CSV.
 
 ## One-Time Setup
 
+Before running setup, collect required values from your dashboard:
+
+- Open [dash.analyticscli.com](https://dash.analyticscli.com) and select the target project.
+- In **API Keys**, create/copy a `readonly_token` (CLI token, scope `read:queries`).
+- If SDK instrumentation is in scope, copy the publishable ingest API key from the same **API Keys** page.
+- Optional: copy `project_id` for explicit per-command overrides.
+- Set default project once after login with `analyticscli projects select` (interactive arrow-key picker).
+
 Preferred:
 
 ```bash
@@ -88,9 +96,9 @@ analyticscli login --clerk-jwt <clerk_jwt>
 After SDK rollout or query changes, validate with a few stable reads:
 
 ```bash
-analyticscli schema events --project <id> --limit 200
-analyticscli goal-completion --project <id> --start onboarding:start --complete onboarding:complete --last 30d
-analyticscli get onboarding-journey --project <id> --last 30d --format text
+analyticscli schema events --limit 200
+analyticscli goal-completion --start onboarding:start --complete onboarding:complete --last 30d
+analyticscli get onboarding-journey --last 30d --format text
 ```
 
 ## Missing Capability Loop

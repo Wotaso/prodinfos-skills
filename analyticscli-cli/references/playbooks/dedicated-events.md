@@ -4,6 +4,12 @@
 
 Provide a stable, predefined event taxonomy for the onboarding to paywall to purchase journey, so teams can build a dedicated dropoff chart without schema drift.
 
+## Credential Source
+
+- Get `readonly_token` (CLI) and publishable ingest API key (SDK) in project **API Keys** at [dash.analyticscli.com](https://dash.analyticscli.com).
+- Optional: get `project_id` from project context for explicit `--project` overrides.
+- Preferred: set the CLI default project once with `analyticscli projects select` (arrow-key picker).
+
 ## Canonical Event Names
 
 - `onboarding:start`

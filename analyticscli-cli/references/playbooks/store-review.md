@@ -4,6 +4,12 @@
 
 Measure where review prompts are shown and which placements correlate with positive outcomes.
 
+## Credential Source
+
+- Get `readonly_token` (CLI) and publishable ingest API key (SDK) in project **API Keys** at [dash.analyticscli.com](https://dash.analyticscli.com).
+- Optional: get `project_id` from project context for explicit `--project` overrides.
+- Preferred: set the CLI default project once with `analyticscli projects select` (arrow-key picker).
+
 ## Recommended Events
 
 - `review_prompt:eligible`
@@ -35,11 +41,11 @@ Measure where review prompts are shown and which placements correlate with posit
 Completion after shown:
 
 ```bash
-analyticscli conversion-after --project <id> --from review_prompt:shown --to review_prompt:result --last 30d
+analyticscli conversion-after --from review_prompt:shown --to review_prompt:result --last 30d
 ```
 
 Breakdown by screen:
 
 ```bash
-analyticscli breakdown --project <id> --type conversion_after --from review_prompt:shown --to review_prompt:result --by screen --last 30d
+analyticscli breakdown --type conversion_after --from review_prompt:shown --to review_prompt:result --by screen --last 30d
 ```

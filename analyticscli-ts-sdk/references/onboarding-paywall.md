@@ -2,6 +2,10 @@
 
 AnalyticsCLI has strong support for onboarding and paywall funnel analytics, but that only works reliably if instrumentation follows a strict event contract.
 
+Credential source reminder:
+- Get publishable ingest API key and optional CLI `readonly_token` from project **API Keys** in [dash.analyticscli.com](https://dash.analyticscli.com).
+- Optional for CLI verification: set a default project once with `analyticscli projects select` (arrow-key picker), or pass `--project <project_id>` per command.
+
 ## Use The SDK Wrappers
 
 Prefer these helpers over ad-hoc strings:

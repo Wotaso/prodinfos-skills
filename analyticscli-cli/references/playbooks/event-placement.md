@@ -4,6 +4,12 @@
 
 Track only high-leverage product moments so analytics stays actionable and stable.
 
+## Credential Source
+
+- Get `readonly_token` (CLI) and publishable ingest API key (SDK) in project **API Keys** at [dash.analyticscli.com](https://dash.analyticscli.com).
+- Optional: get `project_id` from project context for explicit `--project` overrides.
+- Preferred: set the CLI default project once with `analyticscli projects select` (arrow-key picker).
+
 ## Must-Track Moments
 
 - `onboarding:start`
@@ -70,8 +76,8 @@ Paywall and purchase properties:
 ## Validation Loop
 
 ```bash
-analyticscli schema events --project <id> --limit 200
-analyticscli goal-completion --project <id> --start onboarding:start --complete onboarding:complete --last 30d
-analyticscli goal-completion --project <id> --start onboarding:start --complete purchase:success --last 30d
-analyticscli goal-completion --project <id> --start paywall:shown --complete paywall:skip --last 30d
+analyticscli schema events --limit 200
+analyticscli goal-completion --start onboarding:start --complete onboarding:complete --last 30d
+analyticscli goal-completion --start onboarding:start --complete purchase:success --last 30d
+analyticscli goal-completion --start paywall:shown --complete paywall:skip --last 30d
 ```
