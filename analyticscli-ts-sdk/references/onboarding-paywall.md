@@ -57,7 +57,7 @@ Avoid:
 
 ## Duplicate Tracking Prevention
 
-- SDK built-in dedupe is scoped to `onboarding:step_view` only, and only when `dedupeOnboardingStepViewsPerSession` is enabled.
+- SDK built-in dedupe is scoped to `onboarding:step_view` only and is enabled by default (`dedupeOnboardingStepViewsPerSession: true`).
 - SDK does not automatically dedupe paywall, purchase, or `screen:*` events.
 - Assign a single owner for each funnel boundary (route-level or component-level, not both).
 - Do not track the same screen transition from both parent layout and child screen hooks.

@@ -38,6 +38,7 @@ See [Versioning Notes](references/versioning.md).
 - Use only canonical platform values (`web`, `ios`, `android`, `mac`, `windows`) or omit the field.
 - In React Native/Expo, pass `Platform.OS` directly; the SDK normalizes values like `macos -> mac` and `win32 -> windows`.
 - In React Native/Expo, prefer `appVersion` from `expo-application` (`nativeApplicationVersion`); nullable values can be passed directly.
+- Do not specify `dedupeOnboardingStepViewsPerSession` in generated host-app code by default; SDK default is `true`. Only set it explicitly when the user requests a different behavior or asks for explicit config.
 - Prefer SDK trackers over host-side wrapper utilities. Keep integration code close to call sites.
 - Keep event properties stable and query-relevant.
 - Avoid direct PII.
@@ -128,7 +129,6 @@ const analytics = init({
   debug: __DEV__,
   platform: Platform.OS,
   appVersion: Application.nativeApplicationVersion,
-  dedupeOnboardingStepViewsPerSession: true,
   storage: AsyncStorage,
 });
 ```
@@ -152,7 +152,7 @@ The integration should cover more than SDK bootstrap:
 - Use `trackPaywallEvent(...)` for one-off paywall and purchase milestones.
 - Use canonical event names from `ONBOARDING_EVENTS`, `PAYWALL_EVENTS`, and `PURCHASE_EVENTS`.
 - Keep `onboardingFlowId`, `onboardingFlowVersion`, `paywallId`, `source`, and `appVersion` stable.
-- The SDK built-in dedupe currently applies only to `onboarding:step_view` when `dedupeOnboardingStepViewsPerSession` is enabled.
+- The SDK built-in dedupe currently applies only to `onboarding:step_view` and is enabled by default (`dedupeOnboardingStepViewsPerSession: true`).
 - Prevent duplicate tracking for the same user action across nested layouts/components.
 - Use a single tracking owner per route or lifecycle boundary; if multiple hooks can fire, gate with a session-local idempotency key.
 - For each paywall attempt, emit each milestone once (`paywall:shown`, `purchase:started`, and one terminal event: `purchase:cancel` or `purchase:failed` or `purchase:success`).

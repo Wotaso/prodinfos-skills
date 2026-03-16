@@ -25,7 +25,6 @@ export const analytics = init({
   debug: __DEV__,
   platform: Platform.OS,
   appVersion: Application.nativeApplicationVersion,
-  dedupeOnboardingStepViewsPerSession: true,
   storage: AsyncStorage,
 });
 ```
