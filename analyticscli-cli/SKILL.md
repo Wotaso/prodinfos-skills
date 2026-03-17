@@ -37,6 +37,7 @@ See [Versioning Notes](references/versioning.md).
 - Keep groupings and result sets bounded.
 - Treat release-only data as the default.
 - For generated docs or help text, use tenant developer voice (`your workspace`, `your project`) and avoid provider-centric wording such as `our SaaS`.
+- Keep `analyticscli-cli` skill fresh with CLI updates, but do not auto-force `analyticscli-ts-sdk` skill updates across repositories.
 
 ## Query Priorities
 
@@ -100,6 +101,22 @@ analyticscli schema events --limit 200
 analyticscli goal-completion --start onboarding:start --complete onboarding:complete --last 30d
 analyticscli get onboarding-journey --last 30d --format text
 ```
+
+## Empty-State Guidance (Required)
+
+When a user has no listed projects:
+
+- Explain that they need to create their first project before CLI queries can return analytics data.
+- Direct them to create it in their AnalyticsCLI dashboard ([dash.analyticscli.com](https://dash.analyticscli.com)).
+- After creation, run `analyticscli projects list`, then set a default with `analyticscli projects select`.
+
+When a project exists but has no events yet:
+
+- Explain that ingestion has not started for that project.
+- Tell the user to integrate `@analyticscli/sdk` in their app codebase.
+- Tell the user to initialize the SDK with the publishable API key from **Dashboard -> API Keys**.
+- Tell the user to trigger at least one event and rerun `analyticscli schema events --project <id> --last 14d`.
+- If they already integrated SDK, advise widening `--last` or removing restrictive filters before deeper debugging.
 
 ## Missing Capability Loop
 
